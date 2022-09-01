@@ -1,0 +1,33 @@
+# A simple example of ClusterConfig object:
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: CLUSTERNAME
+  region: REGION
+
+nodeGroups:
+  - name: default-ng
+    amiFamily: AmazonLinux2
+    instanceType: t3.medium
+    iam:
+        instanceRoleARN: arn:aws:iam::605217226756:role/EKS-node-role
+    desiredCapacity: 1
+    minSize: 1
+    maxSize: 3
+    ssh:
+        publicKeyName: Karl-Lab-key-pair
+    labels:
+        dummy: test
+    tags:
+        creator: redacted
+        approved_by: redacted
+        protect_until: DATE
+
+cloudWatch:
+    clusterLogging:
+        # enable specific types of cluster control plane logs
+        enableTypes: ["audit", "authenticator", "controllerManager"]
+        # all supported types: "api", "audit", "authenticator", "controllerManager", "scheduler"
+        # supported special values: "*" and "all"
